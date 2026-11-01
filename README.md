@@ -6,18 +6,8 @@ Desarrollar un monitor HMI (Human-Machine Interface) con una Raspberry Pi Pico W
 
 El proyecto utiliza tres vistas: **LIVE**, **I2C** y **STATS**. Un LED externo funciona como indicador de alarma.
 
-## 2. Material utilizado
 
-- Raspberry Pi Pico W.
-- Pantalla OLED SSD1306 I2C de 128 × 64.
-- LED externo.
-- Resistencia de 220 Ω a 330 Ω para el LED.
-- Cables Dupont.
-- Cable USB para programar la Pico W.
-
-No se utilizó un segundo dispositivo I2C ni el sensor MPU6050 (bonus opcional).
-
-## 3. Diagrama de conexiones y pines
+## 2. Diagrama de conexiones y pines
 
 | Elemento | Pin de Raspberry Pi Pico W |
 |---|---|
@@ -51,7 +41,7 @@ La entrada GP26 se utiliza como señal analógica. Como no se cuenta con potenci
                        OLED SSD1306
 ```
 
-## 4. Comunicación I2C
+## 3. Comunicación I2C
 
 I2C (Inter-Integrated Circuit) es un protocolo de comunicación serial síncrono que utiliza dos líneas principales:
 
@@ -62,7 +52,7 @@ Varios dispositivos pueden compartir las mismas líneas SDA y SCL porque cada di
 
 En esta práctica se configura I2C0 en GP0 (SDA) y GP1 (SCL), con una frecuencia de 400 kHz.
 
-## 5. Escaneo y dirección de la OLED
+## 4. Escaneo y dirección de la OLED
 
 El programa ejecuta `i2c.scan()` al iniciar y muestra las direcciones encontradas en decimal y hexadecimal en la consola serial.
 
@@ -83,7 +73,7 @@ Algunas pantallas pueden utilizar `0x3D` (decimal 61). El programa valida ambas 
 
 No se debe copiar un resultado esperado como si fuera una medición: los valores anteriores son referencias comunes y deben confirmarse con el escaneo físico.
 
-## 6. Funcionamiento de las pantallas HMI
+## 5. Funcionamiento de las pantallas HMI
 
 ### Pantalla LIVE
 
@@ -116,17 +106,17 @@ Muestra el valor mínimo, el valor máximo y el número de muestras registradas 
 **Captura de pantalla STATS:**  
 [Insertar aquí la captura de la pantalla STATS]
 
-## 7. Cambio de pantalla
+## 6. Cambio de pantalla
 
 Se utiliza el botón físico BOOTSEL de la Raspberry Pi Pico W mediante la función `rp2.bootsel_button()` de MicroPython. Cada pulsación cambia a la siguiente pantalla en el orden LIVE → I2C → STATS → LIVE.
 
 La detección se realiza periódicamente y utiliza un intervalo antirrebote por software. No se necesita un pulsador externo adicional.
 
-## 8. Actualización del sistema
+## 7. Actualización del sistema
 
 El programa realiza una lectura ADC cada 100 ms y actualiza la pantalla cada 250 ms. El bucle principal utiliza una pausa de solo 5 ms, evitando pausas largas que hagan lenta la interfaz.
 
-## 9. Tabla de pruebas
+## 8. Tabla de pruebas
 
 Completar la columna de resultado después de realizar cada prueba.
 
@@ -142,7 +132,7 @@ Completar la columna de resultado después de realizar cada prueba.
 | Cambio cíclico | Seguir pulsando BOOTSEL | Regresar a LIVE después de STATS | [listo] |
 
 
-## 10. Conclusión
+## 9. Conclusión
 
 Se desarrolló un monitor HMI con una Raspberry Pi Pico W y una pantalla OLED SSD1306 mediante el protocolo de comunicación I2C. El sistema permite consultar información de una entrada analógica, visualizar estados de operación, revisar los parámetros y dispositivos del bus I2C y consultar estadísticas de las muestras.
 
